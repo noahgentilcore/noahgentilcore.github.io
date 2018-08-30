@@ -15,7 +15,7 @@ body{
 
 /*Header **/
 header{
-    background:#35424a;
+    background:#7b79f7;
     color:#ffffff;
     padding-top:30px;
     min-height:70px;
@@ -24,4 +24,18 @@ header{
 
 header a{
     color:#ffffff;
+    text-decoration:none;
+    text-transform: uppercase;
+    font-size:16px;
+}
+
+header ul{
+    margin:0;
+    padding:0;
+}
+
+header li{
+    float:left;
+    display:inline;
+    padding: 0 0 0 0;
 }
