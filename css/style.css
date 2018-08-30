@@ -37,5 +37,5 @@ header ul{
 header li{
     float:left;
     display:inline;
-    padding: 0 0 0 0;
+    padding: 0 20px 0 20px;
 }
