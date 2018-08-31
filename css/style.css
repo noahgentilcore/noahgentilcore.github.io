@@ -3,7 +3,7 @@ body{
     font: 15px/1.5 Arial, Helvetica, sans-serif;
     padding:0;
     margin:0;
-    background-color:#afafaf;
+    background-color:#e8e8e8;
 }
 /*Global */
 .container{
@@ -15,7 +15,7 @@ body{
 
 /*Header **/
 header{
-    background:#7b79f7;
+    background:#005566;
     color:#ffffff;
     padding-top:30px;
     min-height:70px;
