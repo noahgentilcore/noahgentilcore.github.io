@@ -18,6 +18,16 @@ ul{
     padding:0;
 }
 
+.dark{
+    padding:1px;
+    background:#005566;
+    color:#b5d1ff;
+    margin-top:10px;
+    margin-bottom:10px;
+    border-top:#000000 3px solid;
+    border-bottom:#000000 3px solid;
+}
+
 .button_1{
     height:38px;
     background:#b5d1ff;
@@ -131,6 +141,19 @@ header a:hover{
 
 #boxes .box img{
     width:90px;
+}
+
+/* Sidebar */
+aisde#sidebar{
+    float:right;
+    width:30%;
+    margin-top:10px;
+}
+
+/* Main-col */
+article#main-col{
+    float:left;
+    width:65%;
 }
 
 footer{
