@@ -19,13 +19,14 @@ ul{
 }
 
 .dark{
-    padding:1px;
+    padding:px;
     background:#005566;
     color:#b5d1ff;
     margin-top:10px;
     margin-bottom:10px;
-    border-top:#000000 3px solid;
-    border-bottom:#000000 3px solid;
+    border:1px solid;
+    border-color:#ffffff;
+    
 }
 
 .button_1{
