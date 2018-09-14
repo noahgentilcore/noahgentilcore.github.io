@@ -219,3 +219,24 @@ text-shadow:
         margin-bottom:5px;
     }
 }
+
+a:link {
+    color: Blue; 
+    background-color: transparent; 
+    text-decoration: none;
+    font-size:20;
+}
+
+a:visited {
+    color: Pink;
+    background-color: transparent;
+    text-decoration: none;
+    font-size:20;
+}
+
+a:hover {
+    color: Cyan;
+    background-color: transparent;
+    text-decoration: underline;
+    font-size:20;
+}
