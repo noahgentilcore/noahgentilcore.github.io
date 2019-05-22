@@ -13,10 +13,10 @@
 PImage backImg;PImage birdImg;PImage wallImg;PImage startImg;
 int gamestate = 1, score = 0, highScore = 0, x = -200, y, vy = 0, wx[] = new int[2], wy[] = new int[2];
 void setup() { //All of the images loaded from the same folder
-  backImg =loadImage("./bgImg.png");
-  birdImg =loadImage("./birdImg.png");
-  wallImg =loadImage("./wallImg.png");
-  startImg=loadImage("./startImg.png");
+  backImg =loadImage("../img/bgImg.png");
+  birdImg =loadImage("../img/birdImg.png");
+  wallImg =loadImage("../img/wallImg.png");
+  startImg=loadImage("../img/startImg.png");
   size(600,800);
   fill(0);
   textSize(40);  
@@ -29,7 +29,7 @@ void draw() {
     x -= 6;
     vy += 1;
     y += vy;
-    if(x == -1800) x = 0;
+    if(x == -600) x = 0;
     for(int i = 0 ; i < 2; i++) {
       imageMode(CENTER);
       image(wallImg, wx[i], wy[i] - (wallImg.height/2+100));  //Determines wall placement
