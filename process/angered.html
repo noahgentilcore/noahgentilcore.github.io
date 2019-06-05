@@ -1,0 +1,114 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Processing Demo</title>
+<script type="text/javascript" src="hate.js"></script>
+</head>
+<body>
+<script type="text/processing">
+//@Author Noah Gentilcore 
+//Version 1
+//5 June 2019 
+int[][] b = new int[4][4];
+int pad = 20, bs = 100, len = pad*(b.length+1)+bs*b.length, score = 0, gameState = 1;
+PImage end;
+void setup() {
+  end =loadImage("./end.png"); //loading game over image
+  size(500, 500); 
+  restart();
+  textFont(createFont("Courier", 40));
+}
+void restart() {
+  b = new int[4][4];
+  spawn();
+  score = gameState = 0;
+}
+void spawn() {
+  ArrayList<Integer> xs = new ArrayList<Integer>(), ys = new ArrayList<Integer>();
+  for (int j = 0 ; j < b.length; j++) for (int i = 0 ; i < b[j].length; i++) if (b[j][i]==0) {
+    xs.add(i);
+    ys.add(j);
+  }
+  int rnd = (int)random(0, xs.size()), y = ys.get(rnd), x = xs.get(rnd);
+  b[y][x] = random(0, 1) < .9 ? 2 : 4;
+}
+void draw() {
+  background(255);
+  noStroke();
+  rectt(0,0,width,height,10,color(150));
+  for (int j = 0 ; j < b.length; j++) 
+    for (int i = 0 ; i < b[j].length; i++) {
+      fill(200);
+      rect(pad+(pad+bs)*i, pad+(pad+bs)*j, bs, bs, 5);
+    }
+  for (int j = 0 ; j < b.length; j++) 
+    for (int i = 0 ; i < b[j].length; i++) {
+      float x = pad+(pad+bs)*i, y=pad+(pad+bs)*j;
+      if (b[j][i] > 0) {
+        float p = log(b[j][i])/log(2);
+        rectt(x, y, bs, bs, 5, color(255-p*255/11, p*255/11, 0)); //all the number cells, amp, and all of their colours
+        textt(""+b[j][i], x, y + 22, bs, bs, color(0), 40, CENTER);
+      }
+    }
+  textt("score: "+score,10,5,100,50,color(0),10.0, LEFT); //change gamestate to ended game
+  if(gameState>0) { 
+    image(end,0,0);
+    if(mousePressed) restart(); 
+  }
+}
+void rectt(float x, float y, float w, float h, float r, color c) { fill(c); rect(x,y,w,h,r);  } //make cells
+void textt(String t, float x, float y, float w, float h, color c, float s, int align) {
+  fill(c); textAlign(align); textSize(s); text(t,x,y,w,h);  }
+void keyPressed() {
+  if (gameState == 0) {
+    int dx=keyCode==UP ? -1 : (keyCode==DOWN ? 1 : 0), dy=keyCode==LEFT ? -1 : (keyCode==RIGHT ? 1 : 0);
+    int[][] newb = go(dx, dy, true);
+    if (newb != null) {
+      b = newb;
+      spawn();
+    }
+    if (gameover()) gameState = 1;
+  }
+}
+boolean gameover() {
+  int[] dx = {1, -1, 0, 0}, dy = {0, 0, 1, -1};
+  boolean out = true;
+  for (int i = 0 ; i < 4; i++) if (go(dy[i], dx[i], false) != null) out = false;
+  return out;
+}
+int[][] go(int dy, int dx, boolean updatescore) { //reloading scoretable
+  int[][] bak = new int[4][4];
+  for (int j = 0 ; j < 4; j++) for (int i = 0 ; i < 4; i++) bak[j][i] = b[j][i];
+  boolean moved = false; 
+  if (dx != 0 || dy != 0) {
+    int d =  dx != 0 ? dx : dy;
+    for (int perp = 0; perp < b.length; perp++)  //MOVEMENT THIS WAS HARD OMG I WATCHED SO MUCH YOUTUBE FOR THIS
+      for (int tang = (d > 0 ? b.length - 2 : 1); tang != (d > 0 ? -1 : b.length); tang-=d) {
+      int y = dx != 0 ? perp : tang, x = dx != 0 ? tang : perp, ty = y, tx = x;
+      if (bak[y][x]==0) continue;
+      for (int i=(dx != 0 ? x : y)+d; i!= (d > 0 ? b.length : -1); i+=d) {
+        int r = dx != 0 ? y : i, c = dx != 0 ? i : x;
+        if (bak[r][c] != 0 && bak[r][c] != bak[y][x]) break;
+        if (dx != 0) tx = i; 
+        else ty = i;
+      }
+      if ( (dx != 0 && tx == x) || (dy != 0 && ty == y)) continue; // score adding
+      else if (bak[ty][tx]==bak[y][x]) {
+        bak[ty][tx] *= 2;
+        if(updatescore) score += bak[ty][tx];
+        moved = true;
+      }
+      else if ( (dx != 0 && tx != x) || (dy != 0 && ty != y)) {
+        bak[ty][tx] = bak[y][x];
+        moved = true;
+      }
+      if (moved) bak[y][x] = 0;
+    }
+  }
+  return moved ? bak : null;
+}
+</script>
+<canvas id="sketch" style="border: 1px solid black;"></canvas>
+</body>
+</html>
